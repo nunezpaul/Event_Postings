@@ -16,124 +16,128 @@ def milTime(time):
         return time
 
 def facebookEvent(photo, day, eventname, where, starttime, 
-                  description, endtime = False, submit = True, post2Cal = False):
+                  description, endtime = False, submit = True, post2Cal = False, driven = True):
     #logging in
-    driver = login()
+    if driven:
+        driver = login()
 
-    time.sleep(2)
-    
-    driver.get("https://www.facebook.com/groups/caltechwcs/events")
-    
-    #select create event
-    eventXpath = "(.//*[@class='_42ft _4jy0 _3-9a _4jy3 _4jy1 selected _51sy'])"
-    event = WebDriverWait(driver,10).until(lambda driver: driver.find_element_by_xpath(eventXpath))
-    event.click()
-    driver.implicitly_wait(1)
-    event.send_keys(Keys.TAB)
-    
-    #set up location of event info
-    eventNameXpath = "(.//*[@class='_58al'])[3]"
-    locationXpath = "(.//*[@class='_58al'])[4]"
-    dateXpath = "(.//*[@class='_3smp'])[1]"
-    timeHourXpath = "(.//*[@class='_4nx5'])[1]"
-    timeMinuteXpath = "(.//*[@class='_4nx5'])[2]"
-    timeAMPMXpath = "(.//*[@class = '_4nx5'])[3]"
-    
-    if endtime is not False: 
-        endDateXpath = "(.//*[@class='_3smp'])[2]"
-        endHourXpath = "(.//*[@class='_4nx5'])[4]"
-        endMinuteXpath = "(.//*[@class='_4nx5'])[5]"
-        endAMPMXpath = "(.//*[@class='_4nx5'])[6]"
-    
-    submitClickXpath = ".//*[@class = '_42ft _4jy0 layerConfirm uiOverlayButton _4jy3 _4jy1 selected _51sy']"   
-    addPhotoXpath = ".//*[@class='_n _5f0v']"
-    
-    #find event info location
-    while True:
-        try:
-            eventName =  driver.find_element_by_xpath(eventNameXpath)
-            location =  driver.find_element_by_xpath(locationXpath)
-            date =  driver.find_element_by_xpath(dateXpath)
-            timeHour = driver.find_element_by_xpath(timeHourXpath)
-            timeMinute = driver.find_element_by_xpath(timeMinuteXpath)
-            timeAMPM = driver.find_element_by_xpath(timeAMPMXpath)
-            submitClick = driver.find_element_by_xpath(submitClickXpath)            
-            addPhoto = driver.find_element_by_xpath(addPhotoXpath)
-                #if endtime is not False:
-                #endTimeClick = driver.find_element_by_xpath(endTimeClickXpath)
-                #open endTime
-                #endTimeClick.click()
-            break
-        except:
-            print('attempting to find event pop-up...')
-    
-    #add Photo
-    addPhoto.send_keys(photo)
-    
-    #Next Day python 2 import
-    next_occurence = next_day(day, 0, False)
-
-    date.clear()
-    date.send_keys(next_day(day)) #7/13/2016
-    
-    #send event info
-    eventName.clear()
-    eventName.send_keys(eventname + ' (' + str(next_occurence[1]) + '/' + str(next_occurence[2]) + ')')
-    location.send_keys(where)
-    
-    #set the time
-    timeHour.clear()
-    timeHour.send_keys(starttime[0])
-    timeMinute.clear()
-    timeMinute.send_keys(starttime[1])
-    timeAMPM.clear()
-    timeAMPM.send_keys(starttime[2])
+        time.sleep(2)
         
-    #Add ending time
-    while endtime is not False:
-        try:
-            endDate = driver.find_element_by_xpath(endDateXpath)
-            endHour = driver.find_element_by_xpath(endHourXpath)
-            endMinute = driver.find_element_by_xpath(endMinuteXpath)
-            endAMPM = driver.find_element_by_xpath(endAMPMXpath)
-            break
-        except:
-            print('searching for ending time and date...')
-    
-    if endtime is not False:
-        endDate.clear()
-        endDate.send_keys(next_day(day))
+        driver.get("https://www.facebook.com/groups/caltechwcs/events")
         
-        #ending time
-        endHour.clear()
-        endHour.send_keys(endtime[0])
-        endMinute.clear()
-        endMinute.send_keys(endtime[1])
-        endAMPM.clear()
-        endAMPM.send_keys(endtime[2])
+        #select create event
+        eventXpath = "(.//*[@class='_42ft _4jy0 _3-9a _4jy3 _4jy1 selected _51sy'])"
+        event = WebDriverWait(driver,10).until(lambda driver: driver.find_element_by_xpath(eventXpath))
+        event.click()
+        driver.implicitly_wait(1)
+        event.send_keys(Keys.TAB)
         
-        #enter the details to the event
-        endAMPM.send_keys(description)
-    else:
-        timeAMPM.send_keys(description)
+        #set up location of event info
+        eventNameXpath = "(.//*[@class='_58al'])[3]"
+        locationXpath = "(.//*[@class='_58al'])[4]"
+        dateXpath = "(.//*[@class='_3smp'])[1]"
+        timeHourXpath = "(.//*[@class='_4nx5'])[1]"
+        timeMinuteXpath = "(.//*[@class='_4nx5'])[2]"
+        timeAMPMXpath = "(.//*[@class = '_4nx5'])[3]"
         
-    if submit is True:
-        time.sleep(5)
-        submitClick.click()
-        time.sleep(10)
-        facebookLogoXpath = "(.//*[@class='_2md'])"
+        if endtime is not False:
+            endDateXpath = "(.//*[@class='_3smp'])[2]"
+            endHourXpath = "(.//*[@class='_4nx5'])[4]"
+            endMinuteXpath = "(.//*[@class='_4nx5'])[5]"
+            endAMPMXpath = "(.//*[@class='_4nx5'])[6]"
+        
+        submitClickXpath = ".//*[@class = '_42ft _4jy0 layerConfirm uiOverlayButton _4jy3 _4jy1 selected _51sy']"
+        addPhotoXpath = ".//*[@class='_n _5f0v']"
+        
+        #find event info location
         while True:
             try:
-                facebookLogo = WebDriverWait(driver,10).until(lambda driver: driver.find_element_by_xpath(facebookLogoXpath))
+                eventName =  driver.find_element_by_xpath(eventNameXpath)
+                location =  driver.find_element_by_xpath(locationXpath)
+                date =  driver.find_element_by_xpath(dateXpath)
+                timeHour = driver.find_element_by_xpath(timeHourXpath)
+                timeMinute = driver.find_element_by_xpath(timeMinuteXpath)
+                timeAMPM = driver.find_element_by_xpath(timeAMPMXpath)
+                submitClick = driver.find_element_by_xpath(submitClickXpath)
+                addPhoto = driver.find_element_by_xpath(addPhotoXpath)
+                    #if endtime is not False:
+                    #endTimeClick = driver.find_element_by_xpath(endTimeClickXpath)
+                    #open endTime
+                    #endTimeClick.click()
                 break
             except:
-                print('waiting for page to load')
+                print('attempting to find event pop-up...')
+        
+        #add Photo
+        addPhoto.send_keys(photo)
+        
+        #Next Day python 2 import
+        next_occurence = next_day(day, 0, False)
 
-        FBlink = str(driver.current_url)
-        print(FBlink.split('?')[0])
-        driver.close()
-        out = FBlink.split('?')[0], next_occurence[0]+'-'+ next_occurence[1]+'-'+next_occurence[2]
+        date.clear()
+        date.send_keys(next_day(day)) #7/13/2016
+        
+        #send event info
+        eventName.clear()
+        eventName.send_keys(eventname + ' (' + str(next_occurence[1]) + '/' + str(next_occurence[2]) + ')')
+        location.send_keys(where)
+        
+        #set the time
+        timeHour.clear()
+        timeHour.send_keys(starttime[0])
+        timeMinute.clear()
+        timeMinute.send_keys(starttime[1])
+        timeAMPM.clear()
+        timeAMPM.send_keys(starttime[2])
+        
+        #Add ending time
+        while endtime is not False:
+            try:
+                endDate = driver.find_element_by_xpath(endDateXpath)
+                endHour = driver.find_element_by_xpath(endHourXpath)
+                endMinute = driver.find_element_by_xpath(endMinuteXpath)
+                endAMPM = driver.find_element_by_xpath(endAMPMXpath)
+                break
+            except:
+                print('searching for ending time and date...')
+
+        if endtime is not False:
+            endDate.clear()
+            endDate.send_keys(next_day(day))
+            
+            #ending time
+            endHour.clear()
+            endHour.send_keys(endtime[0])
+            endMinute.clear()
+            endMinute.send_keys(endtime[1])
+            endAMPM.clear()
+            endAMPM.send_keys(endtime[2])
+            
+            #enter the details to the event
+            endAMPM.send_keys(description)
+        else:
+            timeAMPM.send_keys(description)
+
+        if submit is True:
+            time.sleep(5)
+            submitClick.click()
+            time.sleep(10)
+            facebookLogoXpath = "(.//*[@class='_2md'])"
+            while True:
+                try:
+                    facebookLogo = WebDriverWait(driver,10).until(lambda driver: driver.find_element_by_xpath(facebookLogoXpath))
+                    break
+                except:
+                    print('waiting for page to load')
+
+            FBlink = str(driver.current_url)
+            print(FBlink.split('?')[0])
+            driver.close()
+            out = FBlink.split('?')[0], next_occurence[0]+'-'+ next_occurence[1]+'-'+next_occurence[2]
+        else:
+            out = next_occurence[0]+'-'+ next_occurence[1]+'-'+next_occurence[2]
     else:
+        next_occurence = next_day(day, 0, False)
         out = next_occurence[0]+'-'+ next_occurence[1]+'-'+next_occurence[2]
         
     if post2Cal is True:
