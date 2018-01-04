@@ -1,5 +1,5 @@
 from selenium.webdriver.common.keys import Keys
-import facebookEvent as fbE
+import tools.facebookEvent as fbE
 
 description = ((Keys.TAB, Keys.ARROW_DOWN, 
         "What's up Caltech Westies!",
