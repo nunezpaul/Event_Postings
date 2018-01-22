@@ -3,22 +3,22 @@ import tools.facebookEvent as fbE
 
 name = "Malia San Nicholas"
 
-description = ((Keys.TAB, Keys.ARROW_DOWN,
-                "We're extremely excited to be hosting an int/adv class with the amazing " + name + ". ",
+description = (( Keys.ARROW_DOWN,
+                " We're extremely excited to be hosting an int/adv class with the amazing " + name + ". ",
                 "If you've taken classes with us then you're in a for a special treat! ",
                 "If you're looking to take your dancing to the next level, this class is meant for you! ",
                 "We don't host int/adv classes very often so definitely make it a point not to miss out! ",
                 "As a reminder, you must be comfortable with 6- and 8-count basics, no partner is required and we're open to the public so tell your friends!",
                 Keys.ENTER, Keys.ENTER,
-                "Costs:", Keys.ENTER,
+                " Costs:", Keys.ENTER,
                 "Current Caltech Students: $5", Keys.ENTER,
                 "All Others: $10",
                 Keys.ENTER, Keys.ENTER,
-                "Parking is free on campus after 5:00 PM.",
+                " Parking is free on campus after 5:00 PM.",
                 Keys.ENTER,
-                "Directions to recommended parking: https://goo.gl/maps/4jyLq3jserC2",
+                " Directions to recommended parking: https://goo.gl/maps/4jyLq3jserC2",
                 Keys.ENTER,
-                "Directions to South Catalina Recreation Room: https://goo.gl/maps/UvT8FtHUZj72"))
+                " Directions to South Catalina Recreation Room: https://goo.gl/maps/UvT8FtHUZj72"))
         
 endtime = ['8', '30', 'PM']
 starttime = ['7', '30', 'PM']
