@@ -26,7 +26,7 @@ description = ((Keys.TAB, Keys.ARROW_DOWN,
 endtime = ['8', '30', 'PM']
 starttime = ['7', '30', 'PM']
 where = (("South Catalina Recreation Room", Keys.ENTER))
-eventname = 'Beginner West Coast Swing Week 4!'
+eventname = 'Beginner West Coast Swing Week 2!'
 photo = '/Users/p/Desktop/Python/Facebook/Pictures/Beg.jpg'
 day = 2#+7*2 #= Monday, 1+7*n = Tuesday, 2+7*n = Wednesday /// +7*2 is two weeks out +7*1 is one week out ///
 

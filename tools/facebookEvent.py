@@ -39,6 +39,7 @@ def facebookEvent(photo, day, eventname, where, starttime,
         timeHourXpath = "(.//*[@class='_4nx5'])[1]"
         timeMinuteXpath = "(.//*[@class='_4nx5'])[2]"
         timeAMPMXpath = "(.//*[@class = '_4nx5'])[3]"
+        moreInfoXpath = "(.//*[@class ='notranslate _5rpu'])"
         
         if endtime is not False:
             endDateXpath = "(.//*[@class='_3smp'])[2]"
@@ -60,6 +61,8 @@ def facebookEvent(photo, day, eventname, where, starttime,
                 timeAMPM = driver.find_element_by_xpath(timeAMPMXpath)
                 submitClick = driver.find_element_by_xpath(submitClickXpath)
                 addPhoto = driver.find_element_by_xpath(addPhotoXpath)
+                moreInfo = driver.find_element_by_xpath(moreInfoXpath)
+                
                     #if endtime is not False:
                     #endTimeClick = driver.find_element_by_xpath(endTimeClickXpath)
                     #open endTime
@@ -114,9 +117,13 @@ def facebookEvent(photo, day, eventname, where, starttime,
             endAMPM.send_keys(endtime[2])
             
             #enter the details to the event
-            endAMPM.send_keys(description)
+            moreInfo.clear()
+            moreInfo.send_keys(description)
+#endAMPM.send_keys(description)
         else:
-            timeAMPM.send_keys(description)
+            moreInfo.clear()
+            moreInfo.send_keys(description)
+#timeAMPM.send_keys(description)
 
         if submit is True:
             time.sleep(5)
@@ -135,6 +142,7 @@ def facebookEvent(photo, day, eventname, where, starttime,
             driver.close()
             out = FBlink.split('?')[0], next_occurence[0]+'-'+ next_occurence[1]+'-'+next_occurence[2]
         else:
+            return driver
             out = next_occurence[0]+'-'+ next_occurence[1]+'-'+next_occurence[2]
     else:
         next_occurence = next_day(day, 0, False)
