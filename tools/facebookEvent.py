@@ -142,7 +142,6 @@ def facebookEvent(photo, day, eventname, where, starttime,
             driver.close()
             out = FBlink.split('?')[0], next_occurence[0]+'-'+ next_occurence[1]+'-'+next_occurence[2]
         else:
-            return driver
             out = next_occurence[0]+'-'+ next_occurence[1]+'-'+next_occurence[2]
     else:
         next_occurence = next_day(day, 0, False)
