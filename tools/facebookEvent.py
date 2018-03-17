@@ -16,8 +16,8 @@ def milTime(time):
     else:
         return time
 
-def find_element_by_xpath_robust(driver, Xpath):
-    return WebDriverWait(driver,10).until(lambda driver: driver.find_element_by_xpath(Xpath))
+def find_element_by_xpath_robust(driver, Xpath, wait_time = 10):
+    return WebDriverWait(driver, wait_time).until(lambda driver: driver.find_element_by_xpath(Xpath))
 
 def facebookEvent(photo, day, eventname, where, starttime, 
                   description, endtime = False, submit = True, post2Cal = False, driven = True):
@@ -52,11 +52,7 @@ def facebookEvent(photo, day, eventname, where, starttime,
                 submitClick = find_element_by_xpath_robust(driver, submitClickXpath)
                 addPhoto = find_element_by_xpath_robust(driver, addPhotoXpath)
                 moreInfo = find_element_by_xpath_robust(driver, moreInfoXpath)
-                
-                    #if endtime is not False:
-                    #endTimeClick = driver.find_element_by_xpath(endTimeClickXpath)
-                    #open endTime
-                    #endTimeClick.click()
+
                 break
             except Exception as E:
                 print('attempting to find event pop-up...')
@@ -66,8 +62,11 @@ def facebookEvent(photo, day, eventname, where, starttime,
                     print(E)
                     driver.close()
                     exit()
-                        
         
+        #to do:
+            #use open CV to take photo from existing event and paste Caltech Logo ontop of it if link provided
+            #save the previous photo and pull from that if no link is provided
+            #if no photo is saved and no link is provided then use a default of just caltech's logo
         #add Photo
         addPhoto.send_keys(photo)
         
