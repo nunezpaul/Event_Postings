@@ -9,6 +9,8 @@ from FB_Xpaths import *
 #3.4.1 selenium
 #54.0.1 firefox
 
+#Need to add argeparse to this so that I can change names if necessary or if I would not like to post and just test
+
 #test = ['11', '00', 'PM']
 def milTime(time):
     if time[2] == 'PM':  
