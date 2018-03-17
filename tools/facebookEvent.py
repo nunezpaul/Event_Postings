@@ -24,6 +24,12 @@ def facebookEvent(photo, day, eventname, where, starttime,
     #logging in
     if driven:
         driver = login()
+    
+        try:
+            facebookLogo = find_element_by_xpath_robust(driver, facebookLogoXpath)
+            print('Found facebook logo!')
+        except:
+            print('Unable to find facebook logo :(')
         
         driver.get("https://www.facebook.com/groups/caltechwcs/events")
         
@@ -87,10 +93,10 @@ def facebookEvent(photo, day, eventname, where, starttime,
         #Add ending time
         while endtime is not False:
             try:
-                endDate = driver.find_element_by_xpath(endDateXpath)
-                endHour = driver.find_element_by_xpath(endHourXpath)
-                endMinute = driver.find_element_by_xpath(endMinuteXpath)
-                endAMPM = driver.find_element_by_xpath(endAMPMXpath)
+                endDate = find_element_by_xpath_robust(driver, endDateXpath)
+                endHour = find_element_by_xpath_robust(driver, endHourXpath)
+                endMinute = find_element_by_xpath_robust(driver, endMinuteXpath)
+                endAMPM = find_element_by_xpath_robust(driver, endAMPMXpath)
                 break
             except:
                 print('searching for ending time and date...')
@@ -110,20 +116,20 @@ def facebookEvent(photo, day, eventname, where, starttime,
             #enter the details to the event
             moreInfo.clear()
             moreInfo.send_keys(description)
-#endAMPM.send_keys(description)
+
         else:
             moreInfo.clear()
             moreInfo.send_keys(description)
-#timeAMPM.send_keys(description)
+
 
         if submit is True:
             time.sleep(5)
             submitClick.click()
             time.sleep(10)
-            facebookLogoXpath = "(.//*[@class='_2md'])"
+            
             while True:
                 try:
-                    facebookLogo = WebDriverWait(driver,10).until(lambda driver: driver.find_element_by_xpath(facebookLogoXpath))
+                    facebookLogo = find_element_by_xpath_robust(driver, facebookLogoXpath)
                     break
                 except:
                     print('waiting for page to load')

@@ -1,3 +1,6 @@
+#Facebook logo
+facebookLogoXpath = "(.//*[@class='_2md'])"
+
 #create event button
 eventXpath = "(.//*[@class='_42ft _4jy0 _3-9a _4jy3 _4jy1 selected _51sy'])"
 
