@@ -16,6 +16,6 @@ def next_day(weekday, weeks_ahead = 0, facebook_format = True):
         return year, month, day
 
 if __name__ == '__main__':
-    next_day(weekday=0) #next monday
+    next_day(weekday=2 + 4*7) #next monday
     next_day(weekday=0, weeks_ahead=1) #second monday from now
     next_day(weekday=0, weeks_ahead=2, facebook_format=False) #third monday from now and y/m/d format

@@ -29,4 +29,4 @@ day = 2 #0+7*n = Monday, 1+7*n = Tuesday, 2+7*n = Wednesday
 out = fbE.facebookEvent(photo = photo, day = day, eventname = eventname,
                         where = where, starttime = starttime,
                         description = description, endtime = endtime,
-                        submit = False, post2Cal = False)
+                        submit = True, post2Cal = True, driven = True)

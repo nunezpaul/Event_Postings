@@ -4,6 +4,7 @@ from selenium.webdriver.common.keys import Keys
 from loginFB import login
 from next_date import next_day
 import time
+from FB_Xpaths import *
 
 #3.4.1 selenium
 #54.0.1 firefox
@@ -15,61 +16,51 @@ def milTime(time):
     else:
         return time
 
+def find_element_by_xpath_robust(driver, Xpath):
+    return WebDriverWait(driver,10).until(lambda driver: driver.find_element_by_xpath(Xpath))
+
 def facebookEvent(photo, day, eventname, where, starttime, 
                   description, endtime = False, submit = True, post2Cal = False, driven = True):
     #logging in
     if driven:
         driver = login()
-
-        time.sleep(2)
         
         driver.get("https://www.facebook.com/groups/caltechwcs/events")
         
         #select create event
-        eventXpath = "(.//*[@class='_42ft _4jy0 _3-9a _4jy3 _4jy1 selected _51sy'])"
-        event = WebDriverWait(driver,10).until(lambda driver: driver.find_element_by_xpath(eventXpath))
+        event = find_element_by_xpath_robust(driver, eventXpath)
         event.click()
-        driver.implicitly_wait(1)
-        event.send_keys(Keys.TAB)
         
-        #set up location of event info
-        eventNameXpath = "(.//*[@class='_58al'])[3]"
-        locationXpath = "(.//*[@class='_58al'])[4]"
-        dateXpath = "(.//*[@class='_3smp'])[1]"
-        timeHourXpath = "(.//*[@class='_4nx5'])[1]"
-        timeMinuteXpath = "(.//*[@class='_4nx5'])[2]"
-        timeAMPMXpath = "(.//*[@class = '_4nx5'])[3]"
-        moreInfoXpath = "(.//*[@class ='notranslate _5rpu'])"
-        
-        if endtime is not False:
-            endDateXpath = "(.//*[@class='_3smp'])[2]"
-            endHourXpath = "(.//*[@class='_4nx5'])[4]"
-            endMinuteXpath = "(.//*[@class='_4nx5'])[5]"
-            endAMPMXpath = "(.//*[@class='_4nx5'])[6]"
-        
-        submitClickXpath = ".//*[@class = '_42ft _4jy0 layerConfirm uiOverlayButton _4jy3 _4jy1 selected _51sy']"
-        addPhotoXpath = ".//*[@class='_n _5f0v']"
-        
+        #to do: make the put in a for loop within the try to shorten the eventName through moreInfo into 3 lines.
+        #should be put into a dictionary such that I can keep track of it
         #find event info location
+        i = 0
         while True:
             try:
-                eventName =  driver.find_element_by_xpath(eventNameXpath)
-                location =  driver.find_element_by_xpath(locationXpath)
-                date =  driver.find_element_by_xpath(dateXpath)
-                timeHour = driver.find_element_by_xpath(timeHourXpath)
-                timeMinute = driver.find_element_by_xpath(timeMinuteXpath)
-                timeAMPM = driver.find_element_by_xpath(timeAMPMXpath)
-                submitClick = driver.find_element_by_xpath(submitClickXpath)
-                addPhoto = driver.find_element_by_xpath(addPhotoXpath)
-                moreInfo = driver.find_element_by_xpath(moreInfoXpath)
+                eventName =  find_element_by_xpath_robust(driver, eventNameXpath)
+                location =  find_element_by_xpath_robust(driver, locationXpath)
+                date =  find_element_by_xpath_robust(driver, dateXpath)
+                timeHour = find_element_by_xpath_robust(driver, timeHourXpath)
+                timeMinute = find_element_by_xpath_robust(driver, timeMinuteXpath)
+                timeAMPM = find_element_by_xpath_robust(driver, timeAMPMXpath)
+                submitClick = find_element_by_xpath_robust(driver, submitClickXpath)
+                addPhoto = find_element_by_xpath_robust(driver, addPhotoXpath)
+                moreInfo = find_element_by_xpath_robust(driver, moreInfoXpath)
                 
                     #if endtime is not False:
                     #endTimeClick = driver.find_element_by_xpath(endTimeClickXpath)
                     #open endTime
                     #endTimeClick.click()
                 break
-            except:
+            except Exception as E:
                 print('attempting to find event pop-up...')
+                i+=1
+                if i > 10:
+                    print('early stopping because: ')
+                    print(E)
+                    driver.close()
+                    exit()
+                        
         
         #add Photo
         addPhoto.send_keys(photo)

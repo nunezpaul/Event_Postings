@@ -3,7 +3,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 import os
 
 def login(username = os.environ['FB_UN'], password = os.environ['FB_PW']):
-    driver = webdriver.Firefox()
+    profile = webdriver.FirefoxProfile('/Users/p/Library/Application Support/Firefox/Profiles/selenium')
+    driver = webdriver.Firefox(firefox_profile=profile)
     driver.get("https://www.facebook.com/")
     
     emailFieldID = "email"
